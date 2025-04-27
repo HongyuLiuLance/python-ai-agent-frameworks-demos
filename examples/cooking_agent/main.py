@@ -4,12 +4,13 @@ OPENAI_API_KEY = 'CLW2Qniw6YNf0bHoe9j0kVGiuNE7jxqmOguOsaFA7yftmfqgMIcSJQQJ99BDAC
 OPENAI_VERSION = '2025-03-01-preview'
 AZURE_ENDPOINT = 'https://sli39-m9z5fe1j-eastus2.cognitiveservices.azure.com/openai/deployments/gpt-4o-transcribe/audio/transcriptions?api-version=2025-03-01-preview'
 
+url = "https://www.youtube.com/shorts/x0zx32CbcKY"
+download.download_youtube_video(url)
 
 
 client = AzureOpenAI(
-    api_key = OPENAI_API_KEY,
-    api_version = OPENAI_VERSION,
-    azure_endpoint = AZURE_ENDPOINT
+    api_key= OPENAI_API_KEY,
+    azure_endpoint=AZURE_ENDPOINT,
 )
 
 response = client.chat.completions.create(
