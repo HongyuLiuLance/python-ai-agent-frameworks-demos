@@ -1,0 +1,8 @@
+Key 1:
+AlKGNuwi4UURzwcIuxt9cYcEDcmSAS6PLVKXmTlSm50oGxJte4osJQQJ99BDACYeBjFXJ3w3AAABACOGaU2D
+Key 2:
+5PrE45pxPhM7pb6LiuDuWnH6YCI0IKyBc1gpG2X2ds0SGbibBOzkJQQJ99BDACYeBjFXJ3w3AAABACOGygkD
+Position:
+eastus
+End Point:
+https://myhackathonfirstproject.openai.azure.com/
