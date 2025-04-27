@@ -1,4 +1,6 @@
 from openai import AzureOpenAI
+import download
+import extract
 
 OPENAI_API_KEY = 'CLW2Qniw6YNf0bHoe9j0kVGiuNE7jxqmOguOsaFA7yftmfqgMIcSJQQJ99BDACHYHv6XJ3w3AAAAACOGEYlZ'
 OPENAI_VERSION = '2025-03-01-preview'
@@ -7,18 +9,12 @@ AZURE_ENDPOINT = 'https://sli39-m9z5fe1j-eastus2.cognitiveservices.azure.com/ope
 url = "https://www.youtube.com/shorts/x0zx32CbcKY"
 download.download_youtube_video(url)
 
+extract.extract_audio()
 
 client = AzureOpenAI(
     api_key= OPENAI_API_KEY,
     azure_endpoint=AZURE_ENDPOINT,
+    api_version=OPENAI_VERSION,
 )
 
-response = client.chat.completions.create(
-    model="gpt-4o-transcribe",  # or your deployment name, e.g., "gpt-35-turbo"
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Tell me a joke."}
-    ]
-)
-
-print(response.choices[0].message.content)
+extract.transcribe_audio_1(client)
