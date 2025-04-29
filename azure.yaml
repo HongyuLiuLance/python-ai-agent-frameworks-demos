@@ -4,11 +4,10 @@ name: azure-openai-entity-extraction
 metadata:
   template: azure-openai-entity-extraction@0.0.4
 
-# ← 在这里新增：
 deployments:
-  - name: gpt-4o-chat       # 部署名称
-    model: gpt-4o            # 要用的模型
-    kind: chat               # “chat” 类型部署（可用于 ChatCompletion）
+  - name: gpt-4o-chat    # deployment name
+    model: gpt-4o        # model to deploy
+    kind: chat           # chat endpoint
 
 hooks:
   postprovision:
