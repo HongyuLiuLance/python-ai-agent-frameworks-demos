@@ -3,6 +3,12 @@
 name: azure-openai-entity-extraction
 metadata:
   template: azure-openai-entity-extraction@0.0.4
+
+deployments:
+  - name: gpt-4o-chat    # deployment name
+    model: gpt-4o        # model to deploy
+    kind: chat           # chat endpoint
+
 hooks:
   postprovision:
     windows:
