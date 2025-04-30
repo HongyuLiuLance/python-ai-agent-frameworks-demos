@@ -39,8 +39,14 @@ class Main_App:
         
         self.setattr_recipe()
 
+        self.set_layout_structure()
 
-        # set layout structure
+
+        
+
+        self.window.setLayout(self.v_base)
+
+    def set_layout_structure(self):
         self.v_base.addLayout(self.h_url_input)
         self.v_base.addLayout(self.h_output)
         self.h_output.addLayout(self.v_ingredient)
@@ -52,10 +58,6 @@ class Main_App:
         self.v_ingredient.addWidget(self.lstview_ingredient)
         self.v_recipe.addWidget(self.lbl_recipe)
         self.v_recipe.addWidget(self.lstview_recipe)
-
-
-        self.window.setLayout(self.v_base)
-
 
 
     def execute(self):
@@ -90,7 +92,7 @@ class Main_App:
 
     def setattr_recipe(self):
         # widgets for recipe part
-        self.lbl_recipe = QLabel()
+        self.lbl_recipe = QLabel("Cooking Steps")
         self.lstview_recipe = QScrollArea()
         self.lstview_recipe.setWidgetResizable(True)
 
