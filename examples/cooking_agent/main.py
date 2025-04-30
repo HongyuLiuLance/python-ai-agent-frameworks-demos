@@ -1,46 +1,30 @@
 # examples/cooking_agent/main.py
-
 import os
 from dotenv import load_dotenv
-from examples.cooking_agent.tools.transcribe_tool import TranscribeVideoTool
-from examples.cooking_agent.tools.extract_ingredients_tool import ExtractIngredientsTool
-from examples.cooking_agent.tools.extract_steps_tool import ExtractStepsTool
+from examples.cooking_agent.agent.cooking_agent import CookingAgent
 
 
 def main():
-    # Load environment variables
     load_dotenv()
+    agent = CookingAgent()
+    source = input("Enter video URL or local audio path: ").strip()
 
-    # Initialize tools
-    transcriber = TranscribeVideoTool()
-    ingredient_extractor = ExtractIngredientsTool()
-    step_extractor = ExtractStepsTool()
+    print("\n🔄 Processing video and extracting information...")
+    result = agent.run(source)
 
-    # Prompt user for input
-    video_source = input("Enter cooking tutorial video URL or local audio file path: ").strip()
+    # Print transcript
+    print(f"\n📝 Transcript:\n{result['transcript']}\n")
 
-    # 1. Transcription
-    print("\n🔄 Transcribing audio...")
-    transcript = transcriber.run(video_source)
-    print(f"\n📝 Transcript:\n\n{transcript}\n")
+    # Print ingredients list
+    print("🍅 Ingredients:")
+    for item in result['ingredients']:
+        print(f"  - {item}")
 
-    # 2. Ingredient extraction
-    print("🔄 Extracting ingredients...")
-    ingredients = ingredient_extractor.run(transcript)
-
-    print("\n🍅 Extracted Ingredients:")
-    for entry in ingredients:
-        if ":" in entry:
-            name, qty = entry.split(":", 1)
-            print(f"  - {name.strip()}: {qty.strip()}")
-        else:
-            print(f"  - {entry}")
-
-    # 3. Step extraction
-    print("\n👩‍🍳 Extracted Cooking Steps:")
-    steps = step_extractor.run(transcript)
-    for idx, step in enumerate(steps, start=1):
+    # Print cooking steps
+    print("\n👩‍🍳 Steps:")
+    for idx, step in enumerate(result['steps'], 1):
         print(f"  {idx}. {step}")
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     main()
