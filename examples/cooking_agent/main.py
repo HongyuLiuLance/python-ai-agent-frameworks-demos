@@ -1,39 +1,43 @@
 # examples/cooking_agent/main.py
-import os
+
 from dotenv import load_dotenv
+load_dotenv()
+
 from examples.cooking_agent.agent.cooking_agent import CookingAgent
 from examples.cooking_agent.app import Main_App
 
+def clear_layout(layout):
+    """
+    Remove and delete all widgets from the given QLayout.
+    """
+    while layout.count():
+        item = layout.takeAt(0)
+        widget = item.widget()
+        if widget:
+            widget.deleteLater()
+
 def main():
-    load_dotenv()
     agent = CookingAgent()
+    app = Main_App()
 
-    main_app = Main_App()
+    def process_url(url: str):
+        # 1. Empty the old list of ingredients and steps
+        clear_layout(app.lst_layout_ingredient)
+        clear_layout(app.lst_layout_recipt)
 
-
-    def process_url(self, url: str):
-
-        print("\n🔄 Processing video and extracting information...")
+        # 2. Calling the Agent Full Pipeline
         result = agent.run(url)
 
-        # Print transcript
-        print(f"\n📝 Transcript:\n{result['transcript']}\n")
+        # 3. Populate new ingredient list
+        for ing in result["ingredients"]:
+            app.add_ingredient(ing)
 
-        # Print ingredients list
-        print("🍅 Ingredients:")
-        for item in result['ingredients']:
-            print(f"  - {item}")
+        # 4. Fill in the new production steps
+        for step in result["steps"]:
+            app.add_steps(step)
 
-        # Print cooking steps
-        print("\n👩‍🍳 Steps:")
-        for idx, step in enumerate(result['steps'], 1):
-            print(f"  {idx}. {step}")
+    app.on_url_submit(process_url)
+    app.execute()
 
-    main_app.on_url_submit(process_url)
-
-    main_app.execute()
-
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

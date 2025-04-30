@@ -9,15 +9,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Azure Whisper configuration from environment
-API_KEY     = os.getenv("AZURE_OPENAI_API_KEY")
-ENDPOINT    = os.getenv("AZURE_OPENAI_ENDPOINT").rstrip("/")
-API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION")
-DEPLOYMENT  = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+API_KEY     = os.getenv("OPENAI_API_KEY")
+ENDPOINT    = os.getenv("OPENAI_API_BASE").rstrip("/")
+API_VERSION = os.getenv("OPENAI_API_VERSION")
+DEPLOYMENT  = os.getenv("OPENAI_DEPLOYMENT")
 
 
 class TranscribeVideoTool:
     """
-    Download a video's audio track via yt-dlp, convert to MP3, 
+    Download a video's audio track via yt-dlp, convert to MP3,
     and transcribe it using Azure Whisper.
     """
     name = "transcribe_video"
@@ -32,6 +32,11 @@ class TranscribeVideoTool:
 
         # 2. Download audio as MP3 using yt-dlp CLI
         audio_file = "example_audio.mp3"
+
+        # Remove any existing file to avoid stale transcripts
+        if os.path.exists(audio_file):
+            os.remove(audio_file)
+
         cmd = [
             "yt-dlp",
             "-f", "bestaudio",
